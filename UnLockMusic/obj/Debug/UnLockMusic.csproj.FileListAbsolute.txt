@@ -1,0 +1,15 @@
+E:\2020学习\项目\UnLockMusic\UnLockMusic\bin\Debug\UnLockMusic.exe.config
+E:\2020学习\项目\UnLockMusic\UnLockMusic\obj\Debug\UnLockMusic.csprojResolveAssemblyReference.cache
+E:\2020学习\项目\UnLockMusic\UnLockMusic\obj\Debug\UnLockMusic.Properties.Resources.resources
+E:\2020学习\项目\UnLockMusic\UnLockMusic\obj\Debug\UnLockMusic.csproj.GenerateResource.Cache
+E:\2020学习\项目\UnLockMusic\UnLockMusic\obj\Debug\UnLockMusic.frmList.resources
+E:\2020学习\项目\UnLockMusic\UnLockMusic\bin\Debug\UnLockMusic.exe
+E:\2020学习\项目\UnLockMusic\UnLockMusic\bin\Debug\UnLockMusic.pdb
+E:\2020学习\项目\UnLockMusic\UnLockMusic\obj\Debug\UnLockMusic.exe
+E:\2020学习\项目\UnLockMusic\UnLockMusic\obj\Debug\UnLockMusic.pdb
+E:\2020学习\项目\UnLockMusic\UnLockMusic\bin\Debug\Newtonsoft.Json.dll
+E:\2020学习\项目\UnLockMusic\UnLockMusic\bin\Debug\Interop.WMPLib.dll
+E:\2020学习\项目\UnLockMusic\UnLockMusic\bin\Debug\AxInterop.WMPLib.dll
+E:\2020学习\项目\UnLockMusic\UnLockMusic\obj\Debug\Interop.WMPLib.dll
+E:\2020学习\项目\UnLockMusic\UnLockMusic\obj\Debug\AxInterop.WMPLib.dll
+E:\2020学习\项目\UnLockMusic\UnLockMusic\obj\Debug\UnLockMusic.csproj.ResolveComReference.cache
