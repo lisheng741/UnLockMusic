@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 
@@ -137,6 +133,27 @@ namespace UnLockMusic
             }
 
             return flag;
+        }
+
+        /// <summary>
+        /// http下载文件
+        /// </summary>
+        /// <param name="url">下载文件地址</param>
+        /// <returns></returns>
+        public static bool HttpDownload(string url, string localfile)
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(url, localfile);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

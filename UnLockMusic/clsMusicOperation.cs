@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.IO;
 
 namespace UnLockMusic
 {
@@ -51,22 +49,23 @@ namespace UnLockMusic
         /// <returns></returns>
         public List<clsMusic> GetMusicList(string SongName)
         {
-            //string url = m_strGetMusicList + SongName;
-            string url = "";
-            string strJson = "";
-            bool bolCanDownload;
-            clsMusic msc;
             List<clsMusic> lmsc = new List<clsMusic>();
-            JObject jo;
-            int i = 0;
-            string KwCSRF = "";
-            string strWyyFirst = "";
-            clsAESEncrypt aes = new clsAESEncrypt();
-
+            var list = Parallel(() => GetKWMusicList(SongName), () => GetKGMusicList(SongName), () => GetWYYMusicList(SongName), () => GetQQMusicList(SongName));
+            foreach (var value in list)
+            {
+                lmsc.AddRange(value);
+            }
+            return lmsc;
+        }
+        public List<clsMusic> GetKWMusicList(string SongName)
+        {
+            bool bolCanDownload;
+            List<clsMusic> lmsc = new List<clsMusic>();
+            //string url = m_strGetMusicList + SongName;
             //----------酷我音乐-----------
-            url = m_strGetKwMusicList1.Replace("<<SongName>>", SongName);
-            strJson = m_htpClient.GetWeb(url);
-            KwCSRF = m_htpClient.GetHeaders("Set-Cookie");
+            string url = m_strGetKwMusicList1.Replace("<<SongName>>", SongName);
+            string strJson = m_htpClient.GetWeb(url);
+            string KwCSRF = m_htpClient.GetHeaders("Set-Cookie");
             KwCSRF = KwCSRF.Substring(KwCSRF.IndexOf("kw_token=") + 9, KwCSRF.IndexOf(";") - 9);
             m_htpClient.AddHeaders("csrf", KwCSRF);
             m_htpClient.AddHeaders("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36");
@@ -76,32 +75,71 @@ namespace UnLockMusic
 
             if (strJson.Substring(1, 10) == "\"code\":200")
             {
-                jo = (JObject)JsonConvert.DeserializeObject(strJson);
+                JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
 
-                for (i = 0; i < jo["data"]["list"].Count(); i++)
+                for (int i = 0; i < jo["data"]["list"].Count(); i++)
                 {
                     bolCanDownload = true; //重置
-                    //旧接口下载，高品质而且vip可下
-                    //if (jo["data"]["lists"][i]["pay"].ToString() == "16711935") //该字段为16711935，则为收费，不可下载
-                    //    bolCanDownload = false;
+                                           //旧接口下载，高品质而且vip可下
+                                           //if (jo["data"]["lists"][i]["pay"].ToString() == "16711935") //该字段为16711935，则为收费，不可下载
+                                           //    bolCanDownload = false;
 
-                    msc = new clsMusic(i, jo["data"]["list"][i]["name"].ToString(), "", jo["data"]["list"][i]["artist"].ToString(), jo["data"]["list"][i]["album"].ToString(), enmMusicSource.Kw, jo["data"]["list"][i]["musicrid"].ToString(), bolCanDownload);
+                    clsMusic msc = new clsMusic(i, jo["data"]["list"][i]["name"].ToString(), "", jo["data"]["list"][i]["artist"].ToString(), jo["data"]["list"][i]["album"].ToString(), enmMusicSource.Kw, jo["data"]["list"][i]["musicrid"].ToString(), bolCanDownload);
 
                     lmsc.Add(msc);
                 }
             }
-            //----------酷我音乐end------------
 
+            return lmsc;
+            //----------酷我音乐end------------
+        }
+
+        public List<clsMusic> GetKGMusicList(string SongName)
+        {
+            bool bolCanDownload;
+            List<clsMusic> lmsc = new List<clsMusic>();
+            //string url = m_strGetMusicList + SongName;
+            //-----酷狗音乐-------------
+            string url = m_strGetKgMusicList.Replace("<<SongName>>", SongName);
+            string strJson = m_htpClient.GetWeb(url);
+
+            if (strJson.Substring(1, 10) == "\"status\":1")
+            {
+                JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
+
+                int i;
+                for (i = 0; i < jo["data"]["lists"].Count(); i++)
+                {
+                    bolCanDownload = true; //重置
+                    if (jo["data"]["lists"][i]["trans_param"]["musicpack_advance"].ToString() == "1") //该字段为1，则为收费，不可下载
+                        bolCanDownload = false;
+
+                    clsMusic msc = new clsMusic(i, jo["data"]["lists"][i]["SongName"].ToString(), "", jo["data"]["lists"][i]["SingerName"].ToString(), jo["data"]["lists"][i]["AlbumName"].ToString(), enmMusicSource.Kg, jo["data"]["lists"][i]["FileHash"].ToString(), bolCanDownload);
+
+                    lmsc.Add(msc);
+                }
+            }
+            return lmsc;
+            //-----酷狗音乐end-------------
+        }
+
+        public List<clsMusic> GetWYYMusicList(string SongName)
+        {
+            bool bolCanDownload;
+            List<clsMusic> lmsc = new List<clsMusic>();
+            clsAESEncrypt aes = new clsAESEncrypt();
             //----------网易云音乐---------
-            strWyyFirst = m_strWyyMusicGetList.Replace("<<SongName>>", SongName);
+            string strWyyFirst = m_strWyyMusicGetList.Replace("<<SongName>>", SongName);
             strWyyFirst = aes.AESEncrypt(strWyyFirst, m_strWyyMusicFourth, m_strWyyMusicIV);
             strWyyFirst = aes.AESEncrypt(strWyyFirst, m_strWyyMusicFourth, m_strWyyMusicIV);//两次AES加密，得到 params 参数
-            url = m_strGetWyyMusicList;
-            strJson = m_htpClient.PostWeb(url, "params=" + strWyyFirst + "&encSecKey=" + m_strWyyMusicRSA);
+                                                                                            //string url = m_strGetMusicList + SongName;
+            string url = m_strGetWyyMusicList;
+            string strJson = m_htpClient.PostWeb(url, "params=" + strWyyFirst + "&encSecKey=" + m_strWyyMusicRSA);
 
             if (strJson.Substring(1, 8) == "\"result\"")
             {
-                jo = (JObject)JsonConvert.DeserializeObject(strJson);
+                JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
+                int i;
                 for (i = 0; i < jo["result"]["songs"].Count(); i++)
                 {
                     bolCanDownload = true; //重置
@@ -109,58 +147,43 @@ namespace UnLockMusic
                         bolCanDownload = false;
 
                     //副标题 jo["result"]["songs"][i]["alia"].ToString() 多为[]，需要清洗，干脆不要了
-                    msc = new clsMusic(i, jo["result"]["songs"][i]["name"].ToString(), "", jo["result"]["songs"][i]["ar"][0]["name"].ToString(), jo["result"]["songs"][i]["al"]["name"].ToString(), enmMusicSource.Wyy, jo["result"]["songs"][i]["id"].ToString(), bolCanDownload);
+                    clsMusic msc = new clsMusic(i, jo["result"]["songs"][i]["name"].ToString(), "", jo["result"]["songs"][i]["ar"][0]["name"].ToString(), jo["result"]["songs"][i]["al"]["name"].ToString(), enmMusicSource.Wyy, jo["result"]["songs"][i]["id"].ToString(), bolCanDownload);
 
                     lmsc.Add(msc);
                 }
             }
+            return lmsc;
             //---------网易云音乐end---------
+        }
 
-            //-----酷狗音乐-------------
-            url = m_strGetKgMusicList.Replace("<<SongName>>", SongName);
-            strJson = m_htpClient.GetWeb(url);
 
-            if (strJson.Substring(1, 10) == "\"status\":1")
-            {
-                jo = (JObject)JsonConvert.DeserializeObject(strJson);
-
-                for (i = 0; i < jo["data"]["lists"].Count(); i++)
-                {
-                    bolCanDownload = true; //重置
-                    if (jo["data"]["lists"][i]["trans_param"]["musicpack_advance"].ToString() == "1") //该字段为1，则为收费，不可下载
-                        bolCanDownload = false;
-
-                    msc = new clsMusic(i, jo["data"]["lists"][i]["SongName"].ToString(), "", jo["data"]["lists"][i]["SingerName"].ToString(), jo["data"]["lists"][i]["AlbumName"].ToString(), enmMusicSource.Kg, jo["data"]["lists"][i]["FileHash"].ToString(), bolCanDownload);
-
-                    lmsc.Add(msc);
-                }
-            }
-            //-----酷狗音乐end-------------
-
+        public List<clsMusic> GetQQMusicList(string SongName)
+        {
+            bool bolCanDownload;
+            List<clsMusic> lmsc = new List<clsMusic>();
+            //string url = m_strGetMusicList + SongName;
             //------QQ音乐--------
-            url = m_strGetQQMusicList.Replace("<<SongName>>", SongName);
-            strJson = m_htpClient.GetWeb(url);
+            string url = m_strGetQQMusicList.Replace("<<SongName>>", SongName);
+            string strJson = m_htpClient.GetWeb(url);
 
             if (strJson.Substring(1, 8) == "\"code\":0")
             {
-                jo = (JObject)JsonConvert.DeserializeObject(strJson);
+                JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
 
+                int i;
                 for (i = 0; i < jo["data"]["song"]["list"].Count(); i++)
                 {
                     bolCanDownload = true; //重置
                     if (jo["data"]["song"]["list"][i]["pay"]["pay_play"].ToString() == "1") //该字段为1，则为收费，不可下载
                         bolCanDownload = false;
 
-                    msc = new clsMusic(i, jo["data"]["song"]["list"][i]["name"].ToString(), jo["data"]["song"]["list"][i]["lyric"].ToString(), jo["data"]["song"]["list"][i]["singer"][0]["name"].ToString(), jo["data"]["song"]["list"][i]["album"]["name"].ToString(), enmMusicSource.QQ, jo["data"]["song"]["list"][i]["mid"].ToString(), bolCanDownload);
+                    clsMusic msc = new clsMusic(i, jo["data"]["song"]["list"][i]["name"].ToString(), jo["data"]["song"]["list"][i]["lyric"].ToString(), jo["data"]["song"]["list"][i]["singer"][0]["name"].ToString(), jo["data"]["song"]["list"][i]["album"]["name"].ToString(), enmMusicSource.QQ, jo["data"]["song"]["list"][i]["mid"].ToString(), bolCanDownload);
 
                     lmsc.Add(msc);
                 }
             }
-            //------QQ音乐End--------
-
             return lmsc;
         }
-
         /// <summary>
         /// 获取音乐下载URL
         /// </summary>
@@ -253,6 +276,26 @@ namespace UnLockMusic
         public static void SetKgDfid(string dfid = "07u9ob41Vu350chwOw4ejU7b")
         {
             m_strGetKgMusicDownloadURL = m_strGetKgMusicDownloadURL.Replace("<<kgDFID>>", dfid);
+        }
+
+        public static T[] Parallel<T>(params Func<T>[] actions)
+        {
+            Task<T>[] tasks = new Task<T>[actions.Length];
+            T[] rtn = new T[actions.Length];
+            int i = 0;
+            foreach (var func in actions)
+            {
+                tasks[i] = Task.Run(func);
+                ++i;
+            }
+            i = 0;
+            foreach (var task in tasks)
+            {
+                task.Wait();
+                rtn[i] = task.Result;
+                ++i;
+            }
+            return rtn;
         }
     }
 }
