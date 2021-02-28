@@ -171,11 +171,13 @@ namespace UnLockMusic
             cmbFormat.Items.Clear();
             //cmbFormat.Items.Add("歌名");
             cmbFormat.Items.AddRange(new object[] {
-            "歌名",
+            "歌手 - 歌名",
             "歌名（副标题）",
             "歌名（副标题）[歌手]",
             "歌名[歌手]",
-            "歌名（歌手）"});
+            "歌名（歌手）",
+            "歌名",
+            "歌名 - 歌手"});
             cmbFormat.SelectedIndex = 0;
         }
 
@@ -515,7 +517,7 @@ namespace UnLockMusic
             switch (m_intFormat)
             {
                 case 0:
-                    strResult = dataGVscan.Rows[iRow].Cells["dgvName"].Value.ToString();
+                    strResult = dataGVscan.Rows[iRow].Cells["dgvSinger"].Value.ToString() + " - " + dataGVscan.Rows[iRow].Cells["dgvName"].Value.ToString();
                     break;
                 case 1:
                     strResult = dataGVscan.Rows[iRow].Cells["dgvSubheading"].Value.ToString();
@@ -531,10 +533,19 @@ namespace UnLockMusic
                 case 4:
                     strResult = dataGVscan.Rows[iRow].Cells["dgvName"].Value.ToString() + "(" + dataGVscan.Rows[iRow].Cells["dgvSinger"].Value.ToString() + ")";
                     break;
+                case 5:
+                    strResult = dataGVscan.Rows[iRow].Cells["dgvName"].Value.ToString() ;
+                    break;
+                case 6:
+                    strResult = dataGVscan.Rows[iRow].Cells["dgvName"].Value.ToString() + " - " + dataGVscan.Rows[iRow].Cells["dgvSinger"].Value.ToString();
+                    break;
                 default:
                     strResult = dataGVscan.Rows[iRow].Cells["dgvName"].Value.ToString();
                     break;
             }
+            //创建文件时提示：不支持给定路径的格式
+            strResult = strResult.Replace("/", "_").Replace("\\", "_").Replace(":", "_").Replace("*", "_").Replace("?", "_").Replace("\"", "_").Replace("\'", "_").Replace("<", "_").Replace(">", "_").Replace("|", "_");
+
             return strResult;
         }
         /// <summary>
