@@ -20,6 +20,7 @@ namespace UnLockMusic
         private string m_strTempData = "TempData"; //临时文件夹
         private string m_strLog = "log.txt";//日志文件
         private string m_strConfig = "config.txt";//配置文件
+        private bool isSelectAllMusic = false; // 将全选按钮和取消按钮合并
 
         //定义回调
         private delegate void SetTipCallBack(string strText);
@@ -56,6 +57,7 @@ namespace UnLockMusic
             if (dataGVscan.CurrentCell.OwningColumn.Name == "dgvDownload")
             {
                 DownloadMusic(Convert.ToInt32(dataGVscan.CurrentRow.Index));
+                lblTopTip.Text = "this is add download";
                 return;
             }
 
@@ -73,6 +75,7 @@ namespace UnLockMusic
 
             }
         }
+       
         private void txbSerch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == 13)
@@ -85,10 +88,21 @@ namespace UnLockMusic
         }
         private void btnSelectAll_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < this.dataGVscan.RowCount; i++)
+            isSelectAllMusic = !isSelectAllMusic;
+            if (isSelectAllMusic)
             {
-                if (RowCanDownload(i))
-                    this.dataGVscan.Rows[i].Cells[0].Value = true;
+                for (int i = 0; i < this.dataGVscan.RowCount; i++)
+                {
+                    if (RowCanDownload(i))
+                        this.dataGVscan.Rows[i].Cells[0].Value = true;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < this.dataGVscan.RowCount; i++)
+                {
+                    this.dataGVscan.Rows[i].Cells[0].Value = false;
+                }
             }
         }
         private void btnCancelSelect_Click(object sender, EventArgs e)
@@ -112,18 +126,24 @@ namespace UnLockMusic
         {
             m_intFormat = cmbFormat.SelectedIndex;
         }
-        private void btnLoopPlay_Click(object sender, EventArgs e)
+      
+        private void loopPlay_CheckedChanged(object sender, EventArgs e)
         {
-            if (btnLoopPlay.Text == "试听循环开")
+            CheckState isLoopPlay = loopPlay.CheckState;
+            if (isLoopPlay == CheckState.Checked)
             {
                 axWindowsMediaPlayer1.settings.setMode("loop", true);
-                btnLoopPlay.Text = "试听循环关";
             }
             else
             {
                 axWindowsMediaPlayer1.settings.setMode("loop", false);
-                btnLoopPlay.Text = "试听循环开";
             }
+        }
+
+        private void watchHelp_Click(object sender, EventArgs e)
+        {
+            HelpForm helpForm = new HelpForm();
+            helpForm.Show();
         }
 
         private void frmList_FormClosing(object sender, FormClosingEventArgs e)
@@ -555,5 +575,7 @@ namespace UnLockMusic
             axWindowsMediaPlayer2.URL = "";
         }
         #endregion
+
+      
     }
 }
