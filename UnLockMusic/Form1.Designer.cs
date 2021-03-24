@@ -37,19 +37,6 @@
             this.btnSerch = new System.Windows.Forms.Button();
             this.txbSerch = new System.Windows.Forms.TextBox();
             this.dataGVscan = new System.Windows.Forms.DataGridView();
-            this.select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dgvID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvSinger = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvSourceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvPlayMusic = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dgvDownload = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dgvSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvDownloadInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCanDownload = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvSubheading = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnDownload = new System.Windows.Forms.Button();
             this.btnSelectAll = new System.Windows.Forms.Button();
             this.lblTip = new System.Windows.Forms.Label();
@@ -75,6 +62,19 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.watchAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.loopPlay = new System.Windows.Forms.CheckBox();
+            this.select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dgvID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSinger = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSourceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvPlayMusic = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dgvDownload = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dgvSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvDownloadInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCanDownload = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSubheading = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGVscan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer2)).BeginInit();
@@ -164,90 +164,6 @@
             this.dataGVscan.Size = new System.Drawing.Size(740, 252);
             this.dataGVscan.TabIndex = 8;
             this.dataGVscan.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGVscan_CellContentClick);
-            // 
-            // select
-            // 
-            this.select.HeaderText = "";
-            this.select.Name = "select";
-            this.select.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.select.Width = 40;
-            // 
-            // dgvID
-            // 
-            this.dgvID.HeaderText = "序号";
-            this.dgvID.Name = "dgvID";
-            this.dgvID.Width = 50;
-            // 
-            // dgvDisplayName
-            // 
-            this.dgvDisplayName.HeaderText = "名称";
-            this.dgvDisplayName.Name = "dgvDisplayName";
-            this.dgvDisplayName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvDisplayName.Width = 200;
-            // 
-            // dgvSinger
-            // 
-            this.dgvSinger.HeaderText = "歌手";
-            this.dgvSinger.Name = "dgvSinger";
-            this.dgvSinger.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSinger.Width = 120;
-            // 
-            // dgvClass
-            // 
-            this.dgvClass.HeaderText = "专辑";
-            this.dgvClass.Name = "dgvClass";
-            this.dgvClass.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvClass.Width = 120;
-            // 
-            // dgvSourceName
-            // 
-            this.dgvSourceName.HeaderText = "来源";
-            this.dgvSourceName.Name = "dgvSourceName";
-            this.dgvSourceName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSourceName.Width = 90;
-            // 
-            // dgvPlayMusic
-            // 
-            this.dgvPlayMusic.HeaderText = "试听";
-            this.dgvPlayMusic.Name = "dgvPlayMusic";
-            this.dgvPlayMusic.Width = 50;
-            // 
-            // dgvDownload
-            // 
-            this.dgvDownload.HeaderText = "下载";
-            this.dgvDownload.Name = "dgvDownload";
-            this.dgvDownload.Width = 50;
-            // 
-            // dgvSource
-            // 
-            this.dgvSource.HeaderText = "Source";
-            this.dgvSource.Name = "dgvSource";
-            this.dgvSource.Visible = false;
-            // 
-            // dgvDownloadInfo
-            // 
-            this.dgvDownloadInfo.HeaderText = "DownloadInfo";
-            this.dgvDownloadInfo.Name = "dgvDownloadInfo";
-            this.dgvDownloadInfo.Visible = false;
-            // 
-            // dgvCanDownload
-            // 
-            this.dgvCanDownload.HeaderText = "CanDownload";
-            this.dgvCanDownload.Name = "dgvCanDownload";
-            this.dgvCanDownload.Visible = false;
-            // 
-            // dgvName
-            // 
-            this.dgvName.HeaderText = "Name";
-            this.dgvName.Name = "dgvName";
-            this.dgvName.Visible = false;
-            // 
-            // dgvSubheading
-            // 
-            this.dgvSubheading.HeaderText = "Subheading";
-            this.dgvSubheading.Name = "dgvSubheading";
-            this.dgvSubheading.Visible = false;
             // 
             // btnDownload
             // 
@@ -473,19 +389,19 @@
             // watchHelp
             // 
             this.watchHelp.Name = "watchHelp";
-            this.watchHelp.Size = new System.Drawing.Size(180, 22);
+            this.watchHelp.Size = new System.Drawing.Size(118, 22);
             this.watchHelp.Text = "查看帮助";
             this.watchHelp.Click += new System.EventHandler(this.watchHelp_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(115, 6);
             // 
             // watchAbout
             // 
             this.watchAbout.Name = "watchAbout";
-            this.watchAbout.Size = new System.Drawing.Size(180, 22);
+            this.watchAbout.Size = new System.Drawing.Size(118, 22);
             this.watchAbout.Text = "关于软件";
             // 
             // loopPlay
@@ -500,6 +416,96 @@
             this.loopPlay.Text = "循环播放";
             this.loopPlay.UseVisualStyleBackColor = true;
             this.loopPlay.CheckedChanged += new System.EventHandler(this.loopPlay_CheckedChanged);
+            // 
+            // select
+            // 
+            this.select.HeaderText = "";
+            this.select.Name = "select";
+            this.select.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.select.Width = 40;
+            // 
+            // dgvID
+            // 
+            this.dgvID.HeaderText = "序号";
+            this.dgvID.Name = "dgvID";
+            this.dgvID.Width = 50;
+            // 
+            // dgvDisplayName
+            // 
+            this.dgvDisplayName.HeaderText = "名称";
+            this.dgvDisplayName.Name = "dgvDisplayName";
+            this.dgvDisplayName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvDisplayName.Width = 200;
+            // 
+            // dgvSinger
+            // 
+            this.dgvSinger.HeaderText = "歌手";
+            this.dgvSinger.Name = "dgvSinger";
+            this.dgvSinger.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSinger.Width = 120;
+            // 
+            // dgvClass
+            // 
+            this.dgvClass.HeaderText = "专辑";
+            this.dgvClass.Name = "dgvClass";
+            this.dgvClass.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvClass.Width = 120;
+            // 
+            // dgvSourceName
+            // 
+            this.dgvSourceName.HeaderText = "来源";
+            this.dgvSourceName.Name = "dgvSourceName";
+            this.dgvSourceName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSourceName.Width = 90;
+            // 
+            // dgvPlayMusic
+            // 
+            this.dgvPlayMusic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dgvPlayMusic.HeaderText = "试听";
+            this.dgvPlayMusic.Name = "dgvPlayMusic";
+            this.dgvPlayMusic.Text = "播放";
+            this.dgvPlayMusic.UseColumnTextForButtonValue = true;
+            this.dgvPlayMusic.Width = 50;
+            // 
+            // dgvDownload
+            // 
+            this.dgvDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dgvDownload.HeaderText = "下载";
+            this.dgvDownload.Name = "dgvDownload";
+            this.dgvDownload.Text = "下载";
+            this.dgvDownload.UseColumnTextForButtonValue = true;
+            this.dgvDownload.Width = 50;
+            // 
+            // dgvSource
+            // 
+            this.dgvSource.HeaderText = "Source";
+            this.dgvSource.Name = "dgvSource";
+            this.dgvSource.Visible = false;
+            // 
+            // dgvDownloadInfo
+            // 
+            this.dgvDownloadInfo.HeaderText = "DownloadInfo";
+            this.dgvDownloadInfo.Name = "dgvDownloadInfo";
+            this.dgvDownloadInfo.Visible = false;
+            // 
+            // dgvCanDownload
+            // 
+            this.dgvCanDownload.HeaderText = "CanDownload";
+            this.dgvCanDownload.Name = "dgvCanDownload";
+            this.dgvCanDownload.Visible = false;
+            // 
+            // dgvName
+            // 
+            this.dgvName.HeaderText = "Name";
+            this.dgvName.Name = "dgvName";
+            this.dgvName.Visible = false;
+            // 
+            // dgvSubheading
+            // 
+            this.dgvSubheading.HeaderText = "Subheading";
+            this.dgvSubheading.Name = "dgvSubheading";
+            this.dgvSubheading.Visible = false;
             // 
             // frmList
             // 
@@ -564,6 +570,12 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem watchHelp;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem watchAbout;
+        private System.Windows.Forms.CheckBox loopPlay;
         private System.Windows.Forms.DataGridViewCheckBoxColumn select;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvID;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvDisplayName;
@@ -577,12 +589,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvCanDownload;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvName;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSubheading;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem watchHelp;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem watchAbout;
-        private System.Windows.Forms.CheckBox loopPlay;
     }
 }
 
