@@ -25,6 +25,7 @@
 master 为主分支，目前为最原始版本<br />
 master-dev 为开发版本，个人已经不再维护本分支，欢迎有能力的网友接手<br />
 master-origin 为最原始版本，代码结构相对简单，保留<br />
+__注：下载后默认分支是master，建议切换到master-dev分支：git checkout master-dev__ <br />
 
 
 <!--
