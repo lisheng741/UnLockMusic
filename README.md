@@ -1,6 +1,6 @@
 # Csharp爬取音乐源码
 
-### 新开 .NET5.0 的爬虫项目 https://gitee.com/chen3322275/clismusic
+新开 .NET5.0 的爬虫项目 https://gitee.com/lisheng741/clismusic
 
 
 #### 介绍
