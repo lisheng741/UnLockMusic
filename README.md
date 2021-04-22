@@ -1,5 +1,8 @@
 # Csharp爬取音乐源码
 
+### 新开 .NET5.0 的爬虫项目 https://gitee.com/chen3322275/clismusic
+
+
 #### 介绍
 基于.NET的音乐搜索与播放软件（编程语言：C#，爬取4个平台：酷我/网易云/酷狗/QQ）
 
