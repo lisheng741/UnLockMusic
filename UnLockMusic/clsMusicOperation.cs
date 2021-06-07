@@ -74,7 +74,7 @@ namespace UnLockMusic
             url = m_strGetKwMusicList2.Replace("<<SongName>>", SongName);
             strJson = m_htpClient.GetWeb(url);
 
-            if (strJson.Substring(1, 10) == "\"code\":200")
+            try
             {
                 jo = (JObject)JsonConvert.DeserializeObject(strJson);
 
@@ -90,6 +90,7 @@ namespace UnLockMusic
                     lmsc.Add(msc);
                 }
             }
+            catch { }
             //----------酷我音乐end------------
 
             //----------网易云音乐---------
@@ -99,7 +100,7 @@ namespace UnLockMusic
             url = m_strGetWyyMusicList;
             strJson = m_htpClient.PostWeb(url, "params=" + strWyyFirst + "&encSecKey=" + m_strWyyMusicRSA);
 
-            if (strJson.Substring(1, 8) == "\"result\"")
+            try
             {
                 jo = (JObject)JsonConvert.DeserializeObject(strJson);
                 for (i = 0; i < jo["result"]["songs"].Count(); i++)
@@ -114,13 +115,14 @@ namespace UnLockMusic
                     lmsc.Add(msc);
                 }
             }
+            catch { }
             //---------网易云音乐end---------
 
             //-----酷狗音乐-------------
             url = m_strGetKgMusicList.Replace("<<SongName>>", SongName);
             strJson = m_htpClient.GetWeb(url);
 
-            if (strJson.Substring(1, 10) == "\"status\":1")
+            try
             {
                 jo = (JObject)JsonConvert.DeserializeObject(strJson);
 
@@ -135,13 +137,14 @@ namespace UnLockMusic
                     lmsc.Add(msc);
                 }
             }
+            catch { }
             //-----酷狗音乐end-------------
 
             //------QQ音乐--------
             url = m_strGetQQMusicList.Replace("<<SongName>>", SongName);
             strJson = m_htpClient.GetWeb(url);
 
-            if (strJson.Substring(1, 8) == "\"code\":0")
+            try
             {
                 jo = (JObject)JsonConvert.DeserializeObject(strJson);
 
@@ -156,6 +159,7 @@ namespace UnLockMusic
                     lmsc.Add(msc);
                 }
             }
+            catch { }
             //------QQ音乐End--------
 
             return lmsc;
