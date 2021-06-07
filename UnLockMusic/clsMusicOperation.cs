@@ -73,7 +73,7 @@ namespace UnLockMusic
             url = m_strGetKwMusicList2.Replace("<<SongName>>", SongName);
             strJson = m_htpClient.GetWeb(url);
 
-            if (strJson.Substring(1, 10) == "\"code\":200")
+            try
             {
                 JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
 
@@ -89,6 +89,7 @@ namespace UnLockMusic
                     lmsc.Add(msc);
                 }
             }
+            catch { }
 
             return lmsc;
             //----------酷我音乐end------------
@@ -103,7 +104,7 @@ namespace UnLockMusic
             string url = m_strGetKgMusicList.Replace("<<SongName>>", SongName);
             string strJson = m_htpClient.GetWeb(url);
 
-            if (strJson.Substring(1, 10) == "\"status\":1")
+            try
             {
                 JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
 
@@ -119,6 +120,7 @@ namespace UnLockMusic
                     lmsc.Add(msc);
                 }
             }
+            catch { }
             return lmsc;
             //-----酷狗音乐end-------------
         }
@@ -136,7 +138,7 @@ namespace UnLockMusic
             string url = m_strGetWyyMusicList;
             string strJson = m_htpClient.PostWeb(url, "params=" + strWyyFirst + "&encSecKey=" + m_strWyyMusicRSA);
 
-            if (strJson.Substring(1, 8) == "\"result\"")
+            try
             {
                 JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
                 int i;
@@ -152,6 +154,7 @@ namespace UnLockMusic
                     lmsc.Add(msc);
                 }
             }
+            catch { }
             return lmsc;
             //---------网易云音乐end---------
         }
@@ -166,7 +169,7 @@ namespace UnLockMusic
             string url = m_strGetQQMusicList.Replace("<<SongName>>", SongName);
             string strJson = m_htpClient.GetWeb(url);
 
-            if (strJson.Substring(1, 8) == "\"code\":0")
+            try
             {
                 JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
 
@@ -182,6 +185,7 @@ namespace UnLockMusic
                     lmsc.Add(msc);
                 }
             }
+            catch { }
             return lmsc;
         }
         /// <summary>
