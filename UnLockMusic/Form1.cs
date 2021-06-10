@@ -22,21 +22,26 @@ namespace UnLockMusic
         private string m_strConfig = "config.txt";      //配置文件
         private bool isSelectAllMusic = false;          //将全选按钮和取消按钮合并
 
+        private const int numbering = 1;
+        private const int name = 2;
+        private const int singer = 3;
+        private const int album = 4;
+
         //定义回调
         private delegate void SetTipCallBack(string strText);
         private delegate void SetMusicInfoCallBack(string FilePath, string Title, string Author, string Description = "");
+        private delegate void SetDataGVscanCallBack(int rowNum, clsMusic music);
+        
         //声明回调
         private SetTipCallBack TipCallBack;
         private SetMusicInfoCallBack MusicInfoCallBack;
-
-   
+        private SetDataGVscanCallBack DataGVscanCallBack;
 
         public frmList()
         {
             InitializeComponent();
             init();
             ReadConfig();
-            //dataGVscan.AllowUserToAddRows = false;
         }
 
         #region 控件事件
@@ -90,7 +95,8 @@ namespace UnLockMusic
         private void btnSerch_Click(object sender, EventArgs e)
         {
             ClearForm();
-            GetMusicList();
+            SearchMusic();
+          
         }
         private void btnSelectAll_Click(object sender, EventArgs e)
         {
@@ -206,7 +212,6 @@ namespace UnLockMusic
             "歌名 - 歌手"});
             cmbFormat.SelectedIndex = 0;
         }
-
         /// <summary>
         /// 清除原先界面信息
         /// </summary>
@@ -221,6 +226,15 @@ namespace UnLockMusic
         /// <summary>
         /// 获取列表
         /// </summary>
+        
+        private void SearchMusic()
+        {
+            TipCallBack = new SetTipCallBack(SetTipText);//实例化回调
+            MusicInfoCallBack = new SetMusicInfoCallBack(SetMusicInfo);
+            DataGVscanCallBack = new SetDataGVscanCallBack(AddAMusic);
+            Thread searchMusicThread = new Thread(new ThreadStart(GetMusicList));
+            searchMusicThread.Start();
+        }
         private void GetMusicList()
         {
             string strName = txbSerch.Text;
@@ -229,60 +243,37 @@ namespace UnLockMusic
 
             try
             {
-                dataGVscan.Rows.Clear();//清空列表
+                dataGVscan.Invoke((MethodInvoker)(() =>  //清空列表
+                {
+                        dataGVscan.Rows.Clear();
+                    }));  
                 lmsc = mop.GetMusicList(strName);
-
+                SearchWaitBar.Invoke((MethodInvoker)(() =>
+                    {
+                        SearchWaitBar.Maximum = lmsc.Count();
+                        SearchWaitBar.Value = 0;
+                        if (SearchWaitBar.Maximum > 0) SearchWaitBar.Visible = true;
+                    }));
                 for (int i = 0; i < lmsc.Count(); i++)
                 {
-                    dataGVscan.Rows.Add();
-                    dataGVscan.Rows[i].Cells[1].Value = i + 1;
-                    dataGVscan.Rows[i].Cells[2].Value = lmsc[i].Name + (lmsc[i].Subheading == "" ? "" : lmsc[i].Subheading);
-                    dataGVscan.Rows[i].Cells[3].Value = lmsc[i].Singer;
-                    dataGVscan.Rows[i].Cells[4].Value = lmsc[i].Class;
-                    dataGVscan.Rows[i].Cells["dgvSource"].Value = lmsc[i].Source;
-                    dataGVscan.Rows[i].Cells["dgvName"].Value = lmsc[i].Name;
-                    dataGVscan.Rows[i].Cells["dgvSubheading"].Value = lmsc[i].Subheading;
-                    if (lmsc[i].CanDownload)
-                    {
-                        dataGVscan.Rows[i].Cells["dgvCanDownload"].Value = "1";
-                    }
-                    else
-                    {
-                        dataGVscan.Rows[i].Cells["dgvCanDownload"].Value = "0";
-                        dataGVscan.Rows[i].DefaultCellStyle.BackColor = Color.Silver;
-                    }
+                    dataGVscan.Invoke(DataGVscanCallBack, i, lmsc[i]);
+                    SearchWaitBar.Invoke((MethodInvoker)(() =>
+                        {
 
-                    switch (lmsc[i].Source)
-                    {
-                        case enmMusicSource.QQ:
-                            dataGVscan.Rows[i].Cells[5].Value = "QQ音乐";
-                            dataGVscan.Rows[i].Cells["dgvDownloadInfo"].Value = lmsc[i].DownloadInfo;
-                            break;
-                        case enmMusicSource.Kg:
-                            dataGVscan.Rows[i].Cells[5].Value = "酷狗音乐";
-                            dataGVscan.Rows[i].Cells["dgvDownloadInfo"].Value = lmsc[i].DownloadInfo;
-                            break;
-                        case enmMusicSource.Kw:
-                            dataGVscan.Rows[i].Cells[5].Value = "酷我音乐";
-                            dataGVscan.Rows[i].Cells["dgvDownloadInfo"].Value = lmsc[i].DownloadInfo;
-                            break;
-                        case enmMusicSource.Wyy:
-                            dataGVscan.Rows[i].Cells[5].Value = "网易云音乐";
-                            dataGVscan.Rows[i].Cells["dgvDownloadInfo"].Value = lmsc[i].DownloadInfo;
-                            break;
-                        default:
-                            dataGVscan.Rows[i].Cells[5].Value = "";
-                            break;
-                    }
-                    //if (!lmsc[i].CanDownload) //隐藏不可下载的列
-                    //    dataGVscan.Rows[i].Visible = false;
-
+                            SearchWaitBar.Value = i+1;
+                        }));
                 }
-                lblTip.Text = "搜索完毕。（tip：网络不好的话，试听会卡住，特别是酷我音乐多是高品质。）";
+                SearchWaitBar.Invoke((MethodInvoker)(() =>
+                    {
+                        SearchWaitBar.Visible = false;
+                    }));
+                // todo: 发生错误，返回参数，显示音乐列表
+                lblTip.Invoke(TipCallBack, "搜索完毕。（tip：网络不好的话，试听会卡住，特别是酷我音乐多是高品质。）");
             }
             catch (Exception e)
             {
-                lblTip.Text = "发生错误，错误信息：" + e.Message;
+                // todo: 发生错误，返回参数，不显示音乐列表
+                lblTip.Invoke(TipCallBack, "发生错误，错误信息：" + e.Message);
                 WriteLog("搜索发生错误，错误信息：" + e.Message);
             }
         }
@@ -519,6 +510,58 @@ namespace UnLockMusic
         private void SetTipText(string strText)
         {
             lblTip.Text = strText;
+        }
+        
+        /*
+         *  向音乐列表中增加一项
+         *  params:
+         *        rowNum:当前行号
+         *        music:clsMusic类型项
+         *  return;none
+         */
+        private void AddAMusic(int rowNum, clsMusic music)
+        {
+            dataGVscan.Rows.Add();
+            dataGVscan.Rows[rowNum].Cells[numbering].Value = rowNum + 1;
+            dataGVscan.Rows[rowNum].Cells[name].Value = music.Name + (music.Subheading == "" ? "" : music.Subheading);
+            dataGVscan.Rows[rowNum].Cells[singer].Value = music.Singer;
+            dataGVscan.Rows[rowNum].Cells[album].Value = music.Class;
+            dataGVscan.Rows[rowNum].Cells["dgvSource"].Value = music.Source;
+            dataGVscan.Rows[rowNum].Cells["dgvName"].Value = music.Name;
+            dataGVscan.Rows[rowNum].Cells["dgvSubheading"].Value = music.Subheading;
+            if (music.CanDownload)
+            {
+                dataGVscan.Rows[rowNum].Cells["dgvCanDownload"].Value = "1";
+            }
+            else
+            {
+                dataGVscan.Rows[rowNum].Cells["dgvCanDownload"].Value = "0";
+                dataGVscan.Rows[rowNum].DefaultCellStyle.BackColor = Color.Silver;
+            }
+
+            switch (music.Source)
+            {
+                case enmMusicSource.QQ:
+                    dataGVscan.Rows[rowNum].Cells[5].Value = "QQ音乐";
+                    dataGVscan.Rows[rowNum].Cells["dgvDownloadInfo"].Value = music.DownloadInfo;
+                    break;
+                case enmMusicSource.Kg:
+                    dataGVscan.Rows[rowNum].Cells[5].Value = "酷狗音乐";
+                    dataGVscan.Rows[rowNum].Cells["dgvDownloadInfo"].Value = music.DownloadInfo;
+                    break;
+                case enmMusicSource.Kw:
+                    dataGVscan.Rows[rowNum].Cells[5].Value = "酷我音乐";
+                    dataGVscan.Rows[rowNum].Cells["dgvDownloadInfo"].Value = music.DownloadInfo;
+                    break;
+                case enmMusicSource.Wyy:
+                    dataGVscan.Rows[rowNum].Cells[5].Value = "网易云音乐";
+                    dataGVscan.Rows[rowNum].Cells["dgvDownloadInfo"].Value = music.DownloadInfo;
+                    break;
+                default:
+                    dataGVscan.Rows[rowNum].Cells[5].Value = "";
+                    break;
+            }
+            //if (!lmsc[i].CanDownload) //隐藏不可下载的列
         }
         /// <summary>
         /// 判断歌曲是否能下载
