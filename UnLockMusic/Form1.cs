@@ -11,6 +11,11 @@ using System.Media;
 using System.IO;
 using System.Threading;
 
+/**
+ *  V1.2     检查到bug：issue-0        输入框为空时，可以搜索歌曲，点击试听发生错误  
+ *  V1.2.1   修改                      增加搜索歌曲线程、试听歌曲线程、滚动条等待
+ *           未解决issue-0
+ **/
 namespace UnLockMusic
 {
     public partial class frmList : Form
@@ -56,7 +61,10 @@ namespace UnLockMusic
 
             if ((dataGVscan.CurrentCell.ColumnIndex == 2) || (dataGVscan.CurrentCell.OwningColumn.Name == "dgvPlayMusic"))
             {
-                PlayMusic(dataGVscan.CurrentRow.Index);
+                WaitBar.ResetText();
+                WaitBar.Show();
+                WaitBar.MarqueeAnimationSpeed = 30;
+                new Thread(new ParameterizedThreadStart(PlayMusic)).Start(dataGVscan.CurrentRow.Index);
                 return;
             }
 
@@ -94,6 +102,9 @@ namespace UnLockMusic
          */
         private void btnSerch_Click(object sender, EventArgs e)
         {
+            WaitBar.ResetText();
+            WaitBar.Show();
+            WaitBar.MarqueeAnimationSpeed = 30;
             ClearForm();
             SearchMusic();
           
@@ -248,24 +259,17 @@ namespace UnLockMusic
                         dataGVscan.Rows.Clear();
                     }));  
                 lmsc = mop.GetMusicList(strName);
-                SearchWaitBar.Invoke((MethodInvoker)(() =>
-                    {
-                        SearchWaitBar.Maximum = lmsc.Count();
-                        SearchWaitBar.Value = 0;
-                        if (SearchWaitBar.Maximum > 0) SearchWaitBar.Visible = true;
-                    }));
                 for (int i = 0; i < lmsc.Count(); i++)
                 {
-                    dataGVscan.Invoke(DataGVscanCallBack, i, lmsc[i]);
-                    SearchWaitBar.Invoke((MethodInvoker)(() =>
-                        {
-
-                            SearchWaitBar.Value = i+1;
-                        }));
-                }
-                SearchWaitBar.Invoke((MethodInvoker)(() =>
+                    WaitBar.Invoke((MethodInvoker)(() =>
                     {
-                        SearchWaitBar.Visible = false;
+                        WaitBar.Hide();
+                    }));
+                    dataGVscan.Invoke(DataGVscanCallBack, i, lmsc[i]);
+                }
+                WaitBar.Invoke((MethodInvoker)(() =>
+                    {
+                        WaitBar.Hide();
                     }));
                 // todo: 发生错误，返回参数，显示音乐列表
                 lblTip.Invoke(TipCallBack, "搜索完毕。（tip：网络不好的话，试听会卡住，特别是酷我音乐多是高品质。）");
@@ -400,9 +404,10 @@ namespace UnLockMusic
                 lblTip.Invoke(TipCallBack, "歌曲：" + strName + " 下载失败，错误信息：" + e.Message);
             }
         }
-        private void PlayMusic(int iRow)
+        private void PlayMusic(object oRow)
         {
             //lblTopTip.Text = "";
+            int iRow = (int)oRow;
             string strDownloadURL = "";
             enmMusicSource emsSource = (enmMusicSource)dataGVscan.Rows[iRow].Cells["dgvSource"].Value;
             string strDownloadInfo = dataGVscan.Rows[iRow].Cells["dgvDownloadInfo"].Value.ToString();
@@ -411,7 +416,6 @@ namespace UnLockMusic
             string strFileName = m_strDocument + "\\" + m_strTempData;
             clsMusicOperation mop = new clsMusicOperation();
             clsHttpDownloadFile hdf = new clsHttpDownloadFile();
-
             try
             {
                 if (!Directory.Exists(strFileName))   //如果不存在就创建 临时文件夹  
@@ -420,7 +424,14 @@ namespace UnLockMusic
                 strDownloadURL = mop.GetMusicDownloadURL(strDownloadInfo, emsSource);
                 if (strDownloadURL == "")
                 {
-                    lblTip.Text = "无法获取歌曲“" + strDisplayName + "”的下载地址，试听失败！";
+                    WaitBar.Invoke((MethodInvoker)(() =>
+                    {
+                        WaitBar.Hide();
+                    }));
+                    lblTip.Invoke((MethodInvoker)(()=>
+                    {
+                        lblTip.Text = "无法获取歌曲“" + strDisplayName + "”的下载地址，试听失败！";
+                    }));
                     WriteLog("无法获取歌曲“" + strDisplayName + "”的下载地址，试听失败！");
                     return;
                 }
@@ -429,12 +440,25 @@ namespace UnLockMusic
                 if (!(File.Exists(strFileName))) //不存在缓存，才下载
                     if (!hdf.Download(strDownloadURL, strFileName))
                     {
-                        lblTip.Text = "播放发生错误，错误信息：获取音乐缓存失败。";
+                        WaitBar.Invoke((MethodInvoker)(() =>
+                        {
+                            WaitBar.Hide();
+                        }));
+                        lblTip.Invoke((MethodInvoker)(() =>
+                        {
+                            lblTip.Text = "播放发生错误，错误信息：获取音乐缓存失败。";
+                        }));
                         return;
                     }
-
+                WaitBar.Invoke((MethodInvoker)(() =>
+                {
+                    WaitBar.Hide();
+                }));
                 //播放音乐
-                lblTip.Text = "播放音乐序号：" + strID + "  歌曲名：" + strDisplayName;
+                lblTip.Invoke((MethodInvoker)(() =>
+                {
+                    lblTip.Text = "播放音乐序号：" + strID + "  歌曲名：" + strDisplayName;
+                }));
                 axWindowsMediaPlayer1.URL = strFileName;
                 axWindowsMediaPlayer1.Ctlcontrols.play();
                 //lblMusicTime.Text = axWindowsMediaPlayer1.currentMedia.durationString;
@@ -442,7 +466,14 @@ namespace UnLockMusic
             }
             catch (Exception e)
             {
-                lblTip.Text = "发生错误，错误信息：" + e.Message;
+                WaitBar.Invoke((MethodInvoker)(() =>
+                {
+                    WaitBar.Hide();
+                }));
+                lblTip.Invoke((MethodInvoker)(() =>
+                {
+                    lblTip.Text = "发生错误，错误信息：" + e.Message;
+                }));
                 WriteLog(strDisplayName + " 试听发生错误，错误信息：" + e.Message);
             }
 
