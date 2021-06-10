@@ -15,12 +15,12 @@ namespace UnLockMusic
 {
     public partial class frmList : Form
     {
-        private int m_intFormat = 0; //保存格式：0-歌名，1-歌名（副标题），2-歌名（副标题）[歌手]，3-歌名[歌手]
-        private string m_strDocument = "Music";//保存音乐的文件夹
-        private string m_strTempData = "TempData"; //临时文件夹
-        private string m_strLog = "log.txt";//日志文件
-        private string m_strConfig = "config.txt";//配置文件
-        private bool isSelectAllMusic = false; // 将全选按钮和取消按钮合并
+        private int m_intFormat = 0;                    //保存格式：0-歌名，1-歌名（副标题），2-歌名（副标题）[歌手]，3-歌名[歌手]
+        private string m_strDocument = "Music";         //保存音乐的文件夹
+        private string m_strTempData = "TempData";      //临时文件夹
+        private string m_strLog = "log.txt";            //日志文件
+        private string m_strConfig = "config.txt";      //配置文件
+        private bool isSelectAllMusic = false;          //将全选按钮和取消按钮合并
 
         //定义回调
         private delegate void SetTipCallBack(string strText);
@@ -28,6 +28,8 @@ namespace UnLockMusic
         //声明回调
         private SetTipCallBack TipCallBack;
         private SetMusicInfoCallBack MusicInfoCallBack;
+
+   
 
         public frmList()
         {
@@ -81,6 +83,10 @@ namespace UnLockMusic
             if (e.KeyValue == 13)
                 btnSerch_Click(sender, e);
         }
+
+        /*
+         *搜索歌曲
+         */
         private void btnSerch_Click(object sender, EventArgs e)
         {
             ClearForm();
