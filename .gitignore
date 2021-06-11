@@ -2,4 +2,4 @@
 *.suo
 .vs/
 Debug/
-Relese/
+Release/
