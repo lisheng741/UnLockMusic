@@ -53,6 +53,13 @@
             this.watchAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.loopPlay = new System.Windows.Forms.CheckBox();
             this.WaitBar = new System.Windows.Forms.ProgressBar();
+            this.axWindowsMediaPlayer2 = new AxWMPLib.AxWindowsMediaPlayer();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dgvID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,32 +73,47 @@
             this.dgvCanDownload = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvSubheading = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.axWindowsMediaPlayer2 = new AxWMPLib.AxWindowsMediaPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.dataGVscan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer2)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSerch
             // 
-            this.btnSerch.Location = new System.Drawing.Point(568, 41);
-            this.btnSerch.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSerch.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnSerch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSerch.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnSerch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSerch.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnSerch.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnSerch.Location = new System.Drawing.Point(337, 0);
+            this.btnSerch.Margin = new System.Windows.Forms.Padding(0);
             this.btnSerch.Name = "btnSerch";
-            this.btnSerch.Size = new System.Drawing.Size(51, 26);
+            this.btnSerch.Size = new System.Drawing.Size(79, 32);
             this.btnSerch.TabIndex = 1;
-            this.btnSerch.Text = "查找";
-            this.btnSerch.UseVisualStyleBackColor = true;
+            this.btnSerch.Text = "搜索";
+            this.btnSerch.UseVisualStyleBackColor = false;
             this.btnSerch.Click += new System.EventHandler(this.btnSerch_Click);
             // 
             // txbSerch
             // 
+            this.txbSerch.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txbSerch.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txbSerch.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbSerch.Location = new System.Drawing.Point(194, 41);
+            this.txbSerch.Location = new System.Drawing.Point(2, 6);
             this.txbSerch.Margin = new System.Windows.Forms.Padding(2);
             this.txbSerch.Name = "txbSerch";
-            this.txbSerch.Size = new System.Drawing.Size(374, 26);
+            this.txbSerch.Size = new System.Drawing.Size(333, 19);
             this.txbSerch.TabIndex = 0;
+            this.txbSerch.Text = "输入搜索关键字";
+            this.txbSerch.WordWrap = false;
             this.txbSerch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbSerch_KeyDown);
             // 
             // dataGVscan
@@ -131,8 +153,9 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGVscan.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGVscan.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGVscan.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGVscan.Location = new System.Drawing.Point(29, 86);
+            this.dataGVscan.Location = new System.Drawing.Point(23, 75);
             this.dataGVscan.Name = "dataGVscan";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -152,17 +175,19 @@
             this.dataGVscan.RowTemplate.Height = 23;
             this.dataGVscan.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGVscan.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGVscan.Size = new System.Drawing.Size(740, 252);
+            this.dataGVscan.Size = new System.Drawing.Size(757, 212);
             this.dataGVscan.TabIndex = 8;
             this.dataGVscan.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGVscan_CellContentClick);
             this.dataGVscan.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGVscan_ColumnHeaderMouseClick);
             // 
             // lblTip
             // 
+            this.lblTip.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTip.AutoSize = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.lblTip, 4);
             this.lblTip.Font = new System.Drawing.Font("宋体", 9F);
             this.lblTip.ForeColor = System.Drawing.Color.Red;
-            this.lblTip.Location = new System.Drawing.Point(32, 350);
+            this.lblTip.Location = new System.Drawing.Point(2, 1);
             this.lblTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTip.Name = "lblTip";
             this.lblTip.Size = new System.Drawing.Size(17, 12);
@@ -171,9 +196,10 @@
             // 
             // lblFormatTip
             // 
+            this.lblFormatTip.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblFormatTip.AutoSize = true;
             this.lblFormatTip.Font = new System.Drawing.Font("宋体", 9F);
-            this.lblFormatTip.Location = new System.Drawing.Point(508, 350);
+            this.lblFormatTip.Location = new System.Drawing.Point(443, 21);
             this.lblFormatTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormatTip.Name = "lblFormatTip";
             this.lblFormatTip.Size = new System.Drawing.Size(65, 12);
@@ -184,7 +210,7 @@
             // 
             this.cmbFormat.Font = new System.Drawing.Font("宋体", 9F);
             this.cmbFormat.FormattingEnabled = true;
-            this.cmbFormat.Location = new System.Drawing.Point(561, 346);
+            this.cmbFormat.Location = new System.Drawing.Point(512, 16);
             this.cmbFormat.Margin = new System.Windows.Forms.Padding(2);
             this.cmbFormat.Name = "cmbFormat";
             this.cmbFormat.Size = new System.Drawing.Size(130, 20);
@@ -193,19 +219,22 @@
             // 
             // axWindowsMediaPlayer1
             // 
+            this.axWindowsMediaPlayer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axWindowsMediaPlayer1.Enabled = true;
-            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(29, 367);
+            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(0, 0);
             this.axWindowsMediaPlayer1.Margin = new System.Windows.Forms.Padding(2);
             this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(653, 45);
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(751, 45);
             this.axWindowsMediaPlayer1.TabIndex = 7;
             // 
             // lblTopTip
             // 
+            this.lblTopTip.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTopTip.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.lblTopTip, 3);
             this.lblTopTip.Font = new System.Drawing.Font("宋体", 9F);
-            this.lblTopTip.Location = new System.Drawing.Point(32, 70);
+            this.lblTopTip.Location = new System.Drawing.Point(2, 42);
             this.lblTopTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTopTip.Name = "lblTopTip";
             this.lblTopTip.Size = new System.Drawing.Size(17, 12);
@@ -215,7 +244,7 @@
             // lblMusicTime
             // 
             this.lblMusicTime.AutoSize = true;
-            this.lblMusicTime.Location = new System.Drawing.Point(694, 385);
+            this.lblMusicTime.Location = new System.Drawing.Point(680, 24);
             this.lblMusicTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMusicTime.Name = "lblMusicTime";
             this.lblMusicTime.Size = new System.Drawing.Size(71, 12);
@@ -237,7 +266,8 @@
             // 
             // btnOpenDirectory
             // 
-            this.btnOpenDirectory.Location = new System.Drawing.Point(705, 345);
+            this.btnOpenDirectory.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnOpenDirectory.Location = new System.Drawing.Point(672, 16);
             this.btnOpenDirectory.Margin = new System.Windows.Forms.Padding(2);
             this.btnOpenDirectory.Name = "btnOpenDirectory";
             this.btnOpenDirectory.Size = new System.Drawing.Size(64, 21);
@@ -292,7 +322,7 @@
             this.loopPlay.AutoSize = true;
             this.loopPlay.Checked = true;
             this.loopPlay.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.loopPlay.Location = new System.Drawing.Point(248, 385);
+            this.loopPlay.Location = new System.Drawing.Point(225, 23);
             this.loopPlay.Name = "loopPlay";
             this.loopPlay.Size = new System.Drawing.Size(72, 16);
             this.loopPlay.TabIndex = 17;
@@ -303,20 +333,129 @@
             // WaitBar
             // 
             this.WaitBar.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.WaitBar.Location = new System.Drawing.Point(29, 344);
+            this.WaitBar.Location = new System.Drawing.Point(3, 17);
             this.WaitBar.Minimum = 10;
             this.WaitBar.Name = "WaitBar";
-            this.WaitBar.Size = new System.Drawing.Size(456, 18);
+            this.WaitBar.Size = new System.Drawing.Size(349, 18);
             this.WaitBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.WaitBar.TabIndex = 18;
             this.WaitBar.Value = 20;
             this.WaitBar.Visible = false;
+            // 
+            // axWindowsMediaPlayer2
+            // 
+            this.axWindowsMediaPlayer2.Enabled = true;
+            this.axWindowsMediaPlayer2.Location = new System.Drawing.Point(496, 23);
+            this.axWindowsMediaPlayer2.Margin = new System.Windows.Forms.Padding(2);
+            this.axWindowsMediaPlayer2.Name = "axWindowsMediaPlayer2";
+            this.axWindowsMediaPlayer2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer2.OcxState")));
+            this.axWindowsMediaPlayer2.Size = new System.Drawing.Size(10, 10);
+            this.axWindowsMediaPlayer2.TabIndex = 12;
+            this.axWindowsMediaPlayer2.Visible = false;
+            // 
+            // panel1
+            // 
+            this.tableLayoutPanel3.SetColumnSpan(this.panel1, 4);
+            this.panel1.Controls.Add(this.loopPlay);
+            this.panel1.Controls.Add(this.axWindowsMediaPlayer2);
+            this.panel1.Controls.Add(this.lblMusicTime);
+            this.panel1.Controls.Add(this.axWindowsMediaPlayer1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 43);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(751, 45);
+            this.panel1.TabIndex = 19;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.dataGVscan, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.14984F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 77.85017F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 96F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(803, 397);
+            this.tableLayoutPanel1.TabIndex = 20;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.9545F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.091F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.9545F));
+            this.tableLayoutPanel2.Controls.Add(this.lblTopTip, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.panel2, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(23, 13);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 27F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(757, 56);
+            this.tableLayoutPanel2.TabIndex = 21;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.84906F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.15094F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
+            this.tableLayoutPanel3.Controls.Add(this.panel1, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.lblTip, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnOpenDirectory, 3, 1);
+            this.tableLayoutPanel3.Controls.Add(this.WaitBar, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.lblFormatTip, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.cmbFormat, 2, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(23, 293);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 3;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(757, 91);
+            this.tableLayoutPanel3.TabIndex = 21;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.23249F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.76751F));
+            this.tableLayoutPanel4.Controls.Add(this.btnSerch, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.txbSerch, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(416, 32);
+            this.tableLayoutPanel4.TabIndex = 11;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Window;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.tableLayoutPanel4);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(169, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(418, 34);
+            this.panel2.TabIndex = 12;
             // 
             // select
             // 
             this.select.HeaderText = "全选";
             this.select.Name = "select";
             this.select.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.select.Width = 40;
             // 
             // dgvID
@@ -330,7 +469,7 @@
             this.dgvDisplayName.HeaderText = "名称";
             this.dgvDisplayName.Name = "dgvDisplayName";
             this.dgvDisplayName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvDisplayName.Width = 200;
+            this.dgvDisplayName.Width = 205;
             // 
             // dgvSinger
             // 
@@ -365,11 +504,11 @@
             // dgvDownload
             // 
             this.dgvDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dgvDownload.HeaderText = "下载";
+            this.dgvDownload.HeaderText = "下载选中";
             this.dgvDownload.Name = "dgvDownload";
             this.dgvDownload.Text = "下载";
             this.dgvDownload.UseColumnTextForButtonValue = true;
-            this.dgvDownload.Width = 50;
+            this.dgvDownload.Width = 60;
             // 
             // dgvSource
             // 
@@ -401,17 +540,6 @@
             this.dgvSubheading.Name = "dgvSubheading";
             this.dgvSubheading.Visible = false;
             // 
-            // axWindowsMediaPlayer2
-            // 
-            this.axWindowsMediaPlayer2.Enabled = true;
-            this.axWindowsMediaPlayer2.Location = new System.Drawing.Point(0, 0);
-            this.axWindowsMediaPlayer2.Margin = new System.Windows.Forms.Padding(2);
-            this.axWindowsMediaPlayer2.Name = "axWindowsMediaPlayer2";
-            this.axWindowsMediaPlayer2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer2.OcxState")));
-            this.axWindowsMediaPlayer2.Size = new System.Drawing.Size(157, 32);
-            this.axWindowsMediaPlayer2.TabIndex = 12;
-            this.axWindowsMediaPlayer2.Visible = false;
-            // 
             // frmList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -419,19 +547,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(803, 421);
-            this.Controls.Add(this.WaitBar);
-            this.Controls.Add(this.loopPlay);
-            this.Controls.Add(this.btnOpenDirectory);
-            this.Controls.Add(this.axWindowsMediaPlayer2);
-            this.Controls.Add(this.lblMusicTime);
-            this.Controls.Add(this.lblTopTip);
-            this.Controls.Add(this.axWindowsMediaPlayer1);
-            this.Controls.Add(this.cmbFormat);
-            this.Controls.Add(this.lblFormatTip);
-            this.Controls.Add(this.lblTip);
-            this.Controls.Add(this.dataGVscan);
-            this.Controls.Add(this.txbSerch);
-            this.Controls.Add(this.btnSerch);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -445,6 +561,16 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer2)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -471,6 +597,13 @@
         private System.Windows.Forms.ToolStripMenuItem watchAbout;
         private System.Windows.Forms.CheckBox loopPlay;
         private System.Windows.Forms.ProgressBar WaitBar;
+        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.DataGridViewCheckBoxColumn select;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvID;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvDisplayName;
@@ -484,7 +617,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvCanDownload;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvName;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSubheading;
-        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer2;
     }
 }
 
