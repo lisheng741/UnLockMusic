@@ -67,7 +67,7 @@ namespace UnLockMusic
                 new Thread(new ParameterizedThreadStart(PlayMusic)).Start(dataGVscan.CurrentRow.Index);
                 return;
             }
-
+            
             //Download
             if (dataGVscan.CurrentCell.OwningColumn.Name == "dgvDownload")
             {
@@ -90,7 +90,17 @@ namespace UnLockMusic
 
             }
         }
-       
+        private void dataGVscan_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                selectAll();
+            }
+            if (e.ColumnIndex == 7)
+            {
+                downloadSelected();
+            }
+        }
         private void txbSerch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == 13)
@@ -109,7 +119,7 @@ namespace UnLockMusic
             SearchMusic();
           
         }
-        private void btnSelectAll_Click(object sender, EventArgs e)
+        private void  selectAll()
         {
             isSelectAllMusic = !isSelectAllMusic;
             if (isSelectAllMusic)
@@ -135,7 +145,7 @@ namespace UnLockMusic
                 this.dataGVscan.Rows[i].Cells[0].Value = false;
             }
         }
-        private void btnDownload_Click(object sender, EventArgs e)
+        private void downloadSelected()
         {
             for (int i = 0; i < dataGVscan.RowCount; i++)
             {
@@ -663,8 +673,7 @@ namespace UnLockMusic
             axWindowsMediaPlayer2.currentMedia.setItemInfo("Description", Description);
             axWindowsMediaPlayer2.URL = "";
         }
-        #endregion
 
-      
+        #endregion
     }
 }
